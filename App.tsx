@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import dummy from "./info-json/information.json"
 
 function App() {
+  const worldList = dummy.information
+  const elementStyle ={
+    border:'solid',
+    borderRadius:'10px',
+    position:'relative',
+    left:'10vh',
+    height:'3vh',
+    width:'20vh',
+    marginTop:'5vh',
+    marginBottom:'10vh'
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <div>
+    <table>
+      <tbody>
+        {worldList.map((world) => (
+          <tr key={world.name}>	 
+            <td>{world.age}</td>	  	
+            <td>{world.country}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
   );
 }
 

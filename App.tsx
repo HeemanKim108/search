@@ -1,43 +1,32 @@
 import './App.css';
 import dummy from "./info-json/information.json"
 import React, { useState } from "react";
+import { stringify } from 'querystring';
+import { logDOM } from '@testing-library/react';
 
 function App() {
   const allWorldList = dummy.information
-  type member = {
-    name: string;
-    country: string;
-    food: string;
-  };
   type world = {
     name: string;
     country: string;
   }
-  type WorldList = Array<world>;
-
-const allMemberList = [
-  {
-    name: "太郎",
-    country: "Japan",
-    food: "焼肉"
-  },
-  {
-    name: "花子",
-    country: "Japan",
-    food: "ケーキ"
-  },
-  {
-    name: "リチャード",
-    country: "Canada",
-    food: "ステーキ"
-  },
-  {
-    name: "マイケル",
-    country: "USA",
-    food: "ハンバーガー"
+  interface Category {
+    name: string;
   }
-];
+  // type category = {
+  //   name: string;
+  // }
+  const categoryList = [
+    { name: 'ALL' },
+    { name: 'USA' },
+    { name: 'JAPAN' },
+    { name: 'KOREA' },
+  ];
+  type WorldList = Array<world>;
+  // type CategoryList = Array<category>;
 
+  const [categoryItem, setCategoryItem] = useState<Category>(categoryList[0]);
+  const [toggle, setToggle] = useState<boolean>(false);
 
   const [inputValue, setInputValue] = useState("");
   const [worldList, setWorldList] = useState<WorldList>(allWorldList);
@@ -63,6 +52,11 @@ const allMemberList = [
     search(e.target.value);
   };
 
+  function filterCategory(cate: Category) {
+    setCategoryItem(cate);
+    setToggle(false);
+    // ... api 호출
+  };
 
   return (
     <div className="App">
@@ -80,18 +74,29 @@ const allMemberList = [
           );
         })}
       </ul>
-    </div>
 
-    // <table>
-    //   <tbody>
-    //     {worldList.map((world) => (
-    //       <tr key={world.name}>	 
-    //         <td>{world.age}</td>	  	
-    //         <td>{world.country}</td>
-    //       </tr>
-    //     ))}
-    //   </tbody>
-    // </table>
+      <div
+        className={`select-box ${toggle ? 'open' : ''}`}
+        onClick={() => setToggle(!toggle)} >
+        {categoryItem.name}
+        {/* <img src={} /> */}
+        ↑
+      </div>
+
+      {toggle && (
+        <div className="select-dropdown">
+          {categoryList.map((cate, index) => (
+            <div
+              className="select-item"
+              key={index}
+              onClick={() => filterCategory(cate)}
+            >
+              {cate.name}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
 
   );
 }

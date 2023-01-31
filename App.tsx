@@ -1,8 +1,6 @@
 import './App.css';
 import dummy from "./info-json/information.json"
 import React, { useState } from "react";
-import { stringify } from 'querystring';
-import { logDOM } from '@testing-library/react';
 
 function App() {
   const allWorldList = dummy.information
@@ -55,9 +53,38 @@ function App() {
   function filterCategory(cate: Category) {
     setCategoryItem(cate);
     setToggle(false);
-    // ... api 호출
-  };
-
+    if (cate.name == "USA") {
+      const filteredList = allWorldList.filter((world: world) =>
+        Object.values(world).some(
+          (item: string) =>
+            item?.toUpperCase().indexOf(cate.name.trim().toUpperCase()) !== -1
+        )
+      );
+      setWorldList(filteredList);
+      return;
+    } else if (cate.name == "JAPAN") {
+      const filteredList = allWorldList.filter((world: world) =>
+        Object.values(world).some(
+          (item: string) =>
+            item?.toUpperCase().indexOf(cate.name.trim().toUpperCase()) !== -1
+        )
+      );
+      setWorldList(filteredList);
+      return;
+    } else if (cate.name == "KOREA") {
+      const filteredList = allWorldList.filter((world: world) =>
+        Object.values(world).some(
+          (item: string) =>
+            item?.toUpperCase().indexOf(cate.name.trim().toUpperCase()) !== -1
+        )
+      );
+      setWorldList(filteredList);
+      return;
+    } else {
+      setWorldList(allWorldList);
+      return;
+    }
+  }
   return (
     <div className="App">
       <h1>LIST</h1>
